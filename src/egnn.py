@@ -1,3 +1,27 @@
+"""
+这段代码定义了几个主要的类和函数，它们是实现图神经网络（GNN）和等变图神经网络（EGNN）的关键部分，这些网络特别适用于处理分子数据。以下是每个类和函数的简要说明：
+
+GCL (Graph Convolutional Layer): 这是一个图卷积层的实现，它使用边和节点的特征来更新节点的表示。它包含边模型和节点模型，其中边模型计算边的特征，节点模型聚合来自相邻节点的特征。
+
+EquivariantUpdate: 这个类定义了一个等变更新模块，用于更新节点的坐标。它使用一个MLP（多层感知器）来预测节点位置的变化。
+
+EquivariantBlock: 这个类堆叠了多个GCL层和一个EquivariantUpdate层，形成了一个完整的等变图卷积块。
+
+EGNN (Equivariant Graph Neural Network): 这个类构建了一个等变图神经网络，它可以处理节点和边的特征，并执行图卷积操作。它使用了SinusoidsEmbeddingNew类来生成正弦和余弦的嵌入，这些嵌入用于处理节点间的距离。
+
+GNN (Graph Neural Network): 这是一个更传统的图神经网络实现，它同样可以处理节点和边的特征，但不保证等变性。
+
+SinusoidsEmbeddingNew: 这个类生成了一个正弦和余弦的嵌入，这些嵌入用于编码节点之间的距离信息。
+
+coord2diff: 这个函数将节点的坐标转换为坐标差分，这是图卷积操作中的常见步骤。
+
+unsorted_segment_sum: 这个函数实现了一个自定义的PyTorch操作，用于对特定段的数据进行求和或平均。
+
+Dynamics: 这个类定义了一个动态模型，它使用EGNN或GNN来更新节点的隐藏状态和坐标。
+
+DynamicsWithPockets: 这是Dynamics类的扩展，它考虑了蛋白质口袋（pockets）的影响，允许模型在生成过程中考虑到蛋白质口袋的结构。
+"""
+
 import math
 import numpy as np
 import torch
